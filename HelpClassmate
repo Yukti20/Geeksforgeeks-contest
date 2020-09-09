@@ -1,0 +1,13 @@
+#Here is the function as per the requirement
+
+def help_classmate(arr,n):
+    ls = []
+    for i,p in enumerate(arr):
+        for j in range(i+1, len(arr)):
+            if arr[j] < p:
+                ls.append(arr[j])
+                break
+            if j == len(arr)-1 or j == len(arr):
+                ls.append(-1)
+    ls.append(-1)    
+    return ls
