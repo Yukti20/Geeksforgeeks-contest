@@ -1,0 +1,77 @@
+def neighbour(grid, i, j):
+    ls = [[]]
+    if -1 < i-1 < n and -1 < j-1 < m:
+            if [i-1,j-1] not in ls:
+                ls.append([i-1,j-1])
+                    
+    if -1 < i-1 < n and -1 < j < m:
+        if [i-1,j] not in ls:
+            ls.append([i-1,j])
+                
+    if -1 < i-1 < n and -1 < j+1 < m:
+        if [i-1,j+1] not in ls:
+            ls.append([i-1,j+1])
+                
+    if -1 < i < n and -1 < j-1 < m:
+        if [i,j-1] not in ls:
+            ls.append([i,j-1])
+                
+    if -1 < i < n and -1 < j+1 < m:
+        if [i,j+1] not in ls:
+            ls.append([i,j+1])
+            
+    if -1 < i+1 < n and -1 < j-1 < m:
+        if [i+1,j-1] not in ls:
+            ls.append([i+1,j-1])
+                
+    if -1 < i+1 < n and -1 < j < m:
+        if [i+1,j] not in ls:
+            ls.append([i+1,j])
+                
+    if -1 < i+1 < n and -1 < j+1 < m:
+        if [i+1,j+1] not in ls:
+            ls.append([i+1,j+1])
+                        
+    ls.remove([])
+    return ls
+
+def bfs(grid, Q):
+    count = 0
+    while len(Q) > 0:
+        start = Q[0]
+        Q.remove(Q[0])
+        for i in neighbour(grid, start[0], start[1]):
+            if grid[i[0]][i[1]] == "s":
+                count += 1
+                grid[i[0]][i[1]] = "s&t"     # s&t represents spiritual and travelled
+                Q.append([i[0],i[1]])
+    return count
+
+def maxCities(grid,n,m):
+    spiritual = [[]]
+    for i in range(n):
+        for j in range(m):
+            if grid[i][j] == "*":
+                for c in neighbour(grid, i, j):
+                    if grid[c[0]][c[1]] != "*":
+                        grid[c[0]][c[1]] = "s"           # s stands for spiritual city
+                        spiritual.append([c[0],c[1]])    # list containing all nodes
+    spiritual.remove([])              
+    
+    c = []
+    Q = [[]]
+    if len(spiritual) > 0:
+        for i in spiritual:
+            Q.append(i)
+            if Q[0] == []:
+                Q.remove([])
+            c.append(bfs(grid, Q))
+    else:
+        Q.append([0,0])
+        if Q[0] == []:
+            Q.remove([])
+        c.append(bfs(grid, Q))
+    
+    
+
+    return max(c)
